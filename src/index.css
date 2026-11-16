@@ -1,0 +1,234 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/full.css";
+@import "@fontsource-variable/fraunces/full-italic.css";
+@import "@fontsource-variable/dm-sans/index.css";
+@import "@fontsource-variable/caveat/index.css";
+@import "@fontsource/space-mono/400.css";
+@import "@fontsource/space-mono/700.css";
+
+@theme {
+  --font-serif: "Fraunces Variable", "Iowan Old Style", Georgia, serif;
+  --font-sans: "DM Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-hand: "Caveat Variable", "Segoe Print", cursive;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  --color-paper: #f3ecdf;
+  --color-ink: #27231d;
+  --color-rust: #a1452a;
+  --color-butter: #eac983;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+
+  /* Fine paper grain over the whole page */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    background-size: 280px 280px;
+  }
+
+  ::selection {
+    background: var(--color-rust);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rust);
+    outline-offset: 4px;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ---------- Type ---------- */
+
+.font-display {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 28, "WONK" 0.8;
+}
+
+.font-display-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 40, "WONK" 1;
+}
+
+/* ---------- Paper details ---------- */
+
+.cup-ring {
+  border-radius: 9999px;
+  border: 13px solid rgba(146, 104, 56, 0.075);
+  box-shadow:
+    inset 0 0 22px rgba(146, 104, 56, 0.035),
+    0 0 0 2px rgba(146, 104, 56, 0.018);
+  filter: blur(0.4px);
+}
+
+.rubber-stamp {
+  position: relative;
+  border: 3px double rgba(161, 69, 42, 0.55);
+  border-radius: 49% 51% 48% 52% / 51% 48% 52% 49%;
+  color: rgba(161, 69, 42, 0.8);
+  box-shadow:
+    inset 0 0 0 2px rgba(161, 69, 42, 0.11),
+    inset 0 0 12px rgba(161, 69, 42, 0.06);
+  transform: rotate(11deg);
+  opacity: 0.94;
+}
+
+.rubber-stamp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='90' height='90' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- The envelope ---------- */
+
+.envelope-stage {
+  perspective: 1600px;
+}
+
+.envelope-flap {
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 0.8s cubic-bezier(0.62, 0, 0.3, 1);
+  will-change: transform;
+}
+
+.envelope.is-opening .envelope-flap {
+  transform: rotateX(-172deg);
+}
+
+.flap-details {
+  transition: opacity 0.3s ease;
+}
+
+.envelope.is-opening .flap-details {
+  opacity: 0;
+}
+
+.wax-seal {
+  background: radial-gradient(
+    circle at 34% 28%,
+    #c26345 0%,
+    #9c4a2f 38%,
+    #863d25 62%,
+    #6d2e1a 100%
+  );
+  border-radius: 47% 53% 46% 54% / 52% 46% 54% 48%;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 236, 214, 0.35),
+    inset 0 -4px 8px rgba(48, 18, 8, 0.45),
+    0 6px 14px -4px rgba(53, 42, 27, 0.45);
+  transition:
+    opacity 0.35s ease,
+    transform 0.6s ease;
+}
+
+.envelope.is-opening .wax-seal {
+  opacity: 0;
+  transform: scale(0.72) rotate(-14deg);
+}
+
+@keyframes envelope-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.envelope-enter {
+  animation: envelope-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ---------- Arriving on the desk ---------- */
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-enter {
+  animation: card-enter 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes stamp-in {
+  from {
+    opacity: 0;
+    transform: scale(1.35) rotate(-7deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.stamp-in {
+  animation: stamp-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+}
+
+@keyframes paperclip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.paperclip-in {
+  animation: paperclip-in 0.7s ease-out 0.3s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .envelope-enter,
+  .card-enter,
+  .stamp-in,
+  .paperclip-in {
+    animation: none;
+  }
+
+  .envelope-flap,
+  .flap-details,
+  .wax-seal {
+    transition: none;
+  }
+}
