@@ -1,13 +1,20 @@
-# Makasih ya
+# Thanks Card
 
-Halaman ucapan terima kasih satu layar. Dibuat dengan React, Vite, dan Tailwind CSS.
+Halaman ucapan terima kasih satu layar.
 
 Halaman dimulai sebagai amplop tersegel. Klik segelnya untuk membuka flap dan
 menampilkan kartu. Tombol "kembali ke amplop" menyegelnya lagi.
 
+## Tech stack
+- **React**
+- **TailwindCSS**
+- **Vite**
+
 ## Jalankan
 
 ```bash
+git clone https://github.com/alfarioputra/thanks-card.git
+cd thanks-card
 npm install
 npm run dev
 ```
@@ -18,14 +25,3 @@ Build production:
 npm run build
 npm run preview
 ```
-
-## Ganti nama
-
-Buka halamannya dengan query string:
-
-```
-/?untuk=Joni&dari=Rio
-```
-
-Nama penerima dan pengirim otomatis muncul di amplop dan kartu. Tanpa query
-string, halaman memakai "DitaGPT" dan "Cotet".
